@@ -1,0 +1,19 @@
+---
+platform: linux
+image_resource:
+  type: registry-image
+  source: {repository: ghcr.io/astral-sh/uv}
+  version: {digest: "sha256:e5b65587bce7de595f299855d7385fe7fca39b8a74baa261ba1b7147afa78e58"}
+inputs:
+  - name: repo
+caches:
+  - path: repo/.uv-cache
+run:
+  path: bash
+  args:
+    - -ceu
+    - |
+      cd repo
+      export UV_CACHE_DIR="$PWD/.uv-cache"
+      uv sync --frozen --all-groups
+      uv run --frozen pytest sandbox/tests -q

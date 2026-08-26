@@ -1,0 +1,16 @@
+---
+platform: darwin
+inputs:
+  - name: repo
+outputs:
+  - name: package
+run:
+  path: zsh
+  args:
+    - -ceu
+    - |
+      cd repo
+      npm ci --ignore-scripts --prefix web
+      npm run build --prefix web
+      python3 packaging/macos/build_app.py --repo-root . --output ../package
+      test -x "../package/Starklabs Model Evals.app/Contents/MacOS/starklabs-model-evals"

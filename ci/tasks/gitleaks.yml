@@ -1,0 +1,15 @@
+---
+platform: linux
+image_resource:
+  type: registry-image
+  source: {repository: zricethezav/gitleaks, tag: v8.24.2}
+  version: {digest: "sha256:b5918eb91b8d2473cec722f066abb4352e4ffdc4ec9f4283ec143aba9ec9ebc4"}
+inputs:
+  - name: repo
+run:
+  path: sh
+  args:
+    - -ceu
+    - |
+      cd repo
+      gitleaks detect --no-git --redact --source .

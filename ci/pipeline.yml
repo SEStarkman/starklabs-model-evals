@@ -1,0 +1,50 @@
+---
+resource_types: []
+
+resources:
+  - name: repo
+    type: git
+    icon: github
+    source:
+      uri: git@github.com:SEStarkman/starklabs-model-evals.git
+      branch: main
+      private_key: ((repo_ssh_key))
+
+jobs:
+  - name: backend
+    plan:
+      - get: repo
+        trigger: true
+      - task: backend
+        file: repo/ci/tasks/backend.yml
+
+  - name: web
+    plan:
+      - get: repo
+        trigger: true
+      - task: web
+        file: repo/ci/tasks/web.yml
+
+  - name: sandbox-security
+    plan:
+      - get: repo
+        passed: [backend]
+        trigger: true
+      - task: sandbox-security
+        file: repo/ci/tasks/sandbox-security.yml
+
+  - name: gitleaks
+    plan:
+      - get: repo
+        trigger: true
+      - task: gitleaks
+        file: repo/ci/tasks/gitleaks.yml
+
+  - name: macos-package
+    plan:
+      - get: repo
+        passed: [backend, web, sandbox-security, gitleaks]
+        trigger: false
+      - task: macos-package
+        file: repo/ci/tasks/macos-package.yml
+        tags: [macos]

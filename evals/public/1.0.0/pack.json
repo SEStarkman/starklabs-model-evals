@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "pack_id": "starklabs-public-fixture",
+  "name": "Starklabs public fixture",
+  "version": "1.0.0",
+  "source_files": ["EVALS.md", "SCORECARD.md"],
+  "tests": [
+    {
+      "stable_id": "test-1-count-r",
+      "title": "Test 1: strawberry r count",
+      "prompt": "Under ## Test 1, reply with only the number of times the letter \"r\" appears in the word \"strawberry\".",
+      "expected_output": "3"
+    },
+    {
+      "stable_id": "test-2-poker-river",
+      "title": "Test 2: poker river decision",
+      "prompt": "Analyze this fixed $1/$2 no-limit Texas Hold'em cash-game river decision. Effective stacks were 100 big blinds. The button opened to 2.5bb and Hero called in the big blind with AsJd. The flop was Jh 8s 4s (pot 5.5bb). Hero checked, the button bet 1.8bb, and Hero called. The turn was 2d (pot 9.1bb), and both players checked. The river was Kc. Hero checked, and the button bet 9.1bb into 9.1bb. There are no player-specific reads. Under ## Test 2, choose one primary action: call or fold. Explain the pot-odds threshold, the button's plausible value range and bluff candidates, and how Hero's As blocker changes those bluff combinations. Keep the answer under 180 words.",
+      "expected_output": "Score locally with SCORECARD.md after the candidate run."
+    }
+  ]
+}

@@ -1,0 +1,79 @@
+[project]
+name = "starklabs-model-evals"
+version = "0.1.0"
+description = "macOS-first local model evaluation MVP"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+  "fastapi==0.141.1",
+  "httpx==0.28.1",
+  "pydantic==2.13.4",
+  "starlette==1.3.1",
+  "uvicorn==0.35.0",
+]
+
+[dependency-groups]
+dev = [
+  "mypy==1.17.1",
+  "pytest==8.4.1",
+  "pytest-asyncio==1.1.0",
+  "ruff==0.12.9",
+]
+
+[tool.uv]
+package = true
+
+[tool.setuptools.packages.find]
+where = ["backend/src"]
+
+[tool.pytest.ini_options]
+testpaths = ["backend/tests", "sandbox/tests", "packaging/macos/tests"]
+asyncio_mode = "auto"
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+
+[tool.ruff.lint]
+select = ["ALL"]
+ignore = [
+  "ANN001",
+  "ANN202",
+  "B008",
+  "BLE001",
+  "C901",
+  "COM812",
+  "CPY001",
+  "D",
+  "EM101",
+  "EM102",
+  "EXE002",
+  "FAST002",
+  "INP001",
+  "PLR0913",
+  "PLR0915",
+  "PLR2004",
+  "PT019",
+  "PT017",
+  "ARG001",
+  "FBT003",
+  "PLC0415",
+  "S104",
+  "S105",
+  "S101",
+  "S603",
+  "S607",
+  "TC003",
+  "T201",
+  "TRY003",
+  "TRY004",
+]
+
+[tool.mypy]
+python_version = "3.12"
+strict = true
+packages = ["starklabs_evals"]
+
+[[tool.mypy.overrides]]
+module = ["fastapi", "fastapi.*", "uvicorn", "pygame"]
+ignore_missing_imports = true
