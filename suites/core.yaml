@@ -1,0 +1,54 @@
+name: core
+
+description: >-
+  Fast personal checks for basic instruction following and structured reasoning.
+settings:
+  temperature: 0
+  max_tokens: 800
+
+cases:
+  - id: strawberry-count
+    title: Strawberry letter counting
+    description: >-
+      A smoke check only. This catches surprising token-level counting failures;
+      it is not evidence that a model reasons well.
+    prompt: >-
+      Reply with only the number of times the letter "r" appears in the word
+      "strawberry".
+    graders:
+      - type: exact
+        value: "3"
+
+  - id: poker-river-analysis
+    title: Static poker river decision
+    description: >-
+      A substantive, static no-limit hold'em analysis checked for explicit action,
+      price, range construction, blocker use, and bluff reasoning.
+    system_prompt: >-
+      You are analyzing a fixed poker hand, not playing a live game. State one
+      primary action and justify it from the supplied facts. Do not invent reads.
+    prompt: >-
+      Analyze this fixed $1/$2 no-limit Texas Hold'em cash-game river decision.
+      Effective stacks were 100 big blinds. The button opened to 2.5bb and Hero
+      called in the big blind with AsJd. The flop was Jh 8s 4s (pot 5.5bb). Hero
+      checked, the button bet 1.8bb, and Hero called. The turn was 2d (pot 9.1bb)
+      and both players checked. The river was Kc. Hero checked and the button bet
+      9.1bb into 9.1bb. There are no player-specific reads. Choose call or fold.
+      Explain the pot-odds threshold, the button's plausible value range and bluff
+      candidates, and how Hero's As blocker changes those bluff combinations.
+      Keep the answer under 180 words.
+    graders:
+      - type: regex
+        value: '(?i)\b(call|fold)\b'
+        weight: 2
+      - type: contains
+        value: "33"
+        weight: 2
+      - type: contains
+        value: "value range"
+        ignore_case: true
+      - type: contains
+        value: "bluff"
+        ignore_case: true
+      - type: contains
+        value: "As"
