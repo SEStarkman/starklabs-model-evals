@@ -1,0 +1,19 @@
+# Cache / build artifacts
+__pycache__/
+*.pyc
+.mypy_cache/
+.ruff_cache/
+.venv/
+dist/
+*.egg-info/
+uv.lock
+
+# Run artifacts (generated during eval runs)
+runs/*/output/
+runs/*/artifacts/
+
+# Credentials — never commit these
+.env
+.env.local
+*.key
+*.pem
