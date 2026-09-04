@@ -1,0 +1,8 @@
+# Poker Hand History
+
+Add your hand history here before running the poker analysis case.
+
+Format: Any standard hand history format (HoldemManager, PokerTracker, raw text).
+
+Example placeholder:
+[No hand history provided yet]
